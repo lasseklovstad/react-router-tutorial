@@ -30,6 +30,12 @@ export const getTodos = (): Promise<Todo[]> => {
   });
 };
 
+export const getNumberOfTodos = (): Promise<number> => {
+  return new Promise((res) => {
+    setTimeout(() => res(todos.length), timeout);
+  });
+};
+
 export const getTodo = (id: string | undefined): Promise<Todo> => {
   return new Promise((res, rej) => {
     setTimeout(() => {

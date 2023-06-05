@@ -1,21 +1,13 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { ErrorBoundaryComponent } from "./components/ErrorBoundaryComponent";
-import { Header } from "./components/Header";
-
-const RootLayout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  );
-};
+import { RootLayout, loader as rootLoader } from "./routes/RootLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     errorElement: <ErrorBoundaryComponent />,
+    loader: rootLoader,
     element: <RootLayout />,
     children: [
       { path: "home", lazy: () => import("./routes/Home") },
