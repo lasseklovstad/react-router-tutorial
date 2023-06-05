@@ -5,6 +5,7 @@ import { EditTodo } from "./routes/EditTodo";
 import { NewTodo } from "./routes/NewTodo";
 import { Todos } from "./routes/Todos";
 import { Home } from "./routes/Home";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 const RootLayout = () => {
   return (
@@ -18,6 +19,7 @@ const RootLayout = () => {
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <ErrorBoundary />,
     element: <RootLayout />,
     children: [
       { path: "home", element: <Home /> },
