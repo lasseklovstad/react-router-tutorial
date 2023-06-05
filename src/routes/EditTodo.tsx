@@ -1,25 +1,22 @@
-import { useParams } from "react-router-dom";
-import { getTodo } from "../api/todos.api";
-import { usePromise } from "../api/usePromise";
+import { LoaderFunction, json, useLoaderData } from "react-router-dom";
+import { Todo, getTodo } from "../api/todos.api";
 import { TodoForm } from "../components/TodoForm";
-import { ErrorMessage } from "../components/ErrorMessage";
+
+export const loader: LoaderFunction = async ({ params: { todoId } }) => {
+  return json({ todo: await getTodo(todoId) } satisfies LoaderData);
+};
+
+type LoaderData = {
+  todo: Todo;
+};
 
 export const EditTodo = () => {
-  const { todoId } = useParams();
-  const {
-    data: todo,
-    state: { state, error },
-  } = usePromise(() => getTodo(todoId));
+  const { todo } = useLoaderData() as LoaderData;
   return (
     <main>
       <h2 className="text-xl text-left">Edit Todo</h2>
-      {state === "loading" && <div>Loading todo...</div>}
-      {state === "error" && error && (
-        <ErrorMessage
-          message={`Something went wrong when fetching todo with id ${todoId}: ${error}`}
-        />
-      )}
-      {todo ? <TodoForm todo={todo} /> : null}
+
+      <TodoForm todo={todo} />
     </main>
   );
 };
