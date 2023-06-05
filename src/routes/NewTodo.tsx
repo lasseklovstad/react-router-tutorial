@@ -10,7 +10,7 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect("/todos");
 };
 
-export const NewTodo = () => {
+export const Component = () => {
   return (
     <main>
       <h2 className="text-xl text-left">New Todo</h2>

@@ -10,7 +10,7 @@ type LoaderData = {
   todos: Todo[];
 };
 
-export const Todos = () => {
+export const Component = () => {
   const { todos } = useLoaderData() as LoaderData;
   return (
     <main>
