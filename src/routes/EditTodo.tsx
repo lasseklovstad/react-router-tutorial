@@ -1,6 +1,24 @@
-import { LoaderFunction, json, useLoaderData } from "react-router-dom";
-import { Todo, getTodo } from "../api/todos.api";
+import {
+  ActionFunction,
+  LoaderFunction,
+  json,
+  redirect,
+  useLoaderData,
+} from "react-router-dom";
+import { Todo, getTodo, putTodo } from "../api/todos.api";
 import { TodoForm } from "../components/TodoForm";
+
+export const action: ActionFunction = async ({
+  request,
+  params: { todoId },
+}) => {
+  const formData = await request.formData();
+  const title = String(formData.get("title"));
+  const description = String(formData.get("description"));
+  const id = parseInt(String(todoId));
+  await putTodo({ description, title, id, isDone: false });
+  return redirect("/todos");
+};
 
 export const loader: LoaderFunction = async ({ params: { todoId } }) => {
   return json({ todo: await getTodo(todoId) } satisfies LoaderData);
