@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { Todo, getTodo, putTodo } from "../api/todos.api";
 import { TodoForm } from "../components/TodoForm";
+import { ErrorBoundaryComponent } from "../components/ErrorBoundaryComponent";
 
 export const action: ActionFunction = async ({
   request,
@@ -28,13 +29,14 @@ type LoaderData = {
   todo: Todo;
 };
 
-export const EditTodo = () => {
+export const Component = () => {
   const { todo } = useLoaderData() as LoaderData;
   return (
     <main>
       <h2 className="text-xl text-left">Edit Todo</h2>
-
       <TodoForm todo={todo} />
     </main>
   );
 };
+
+export const ErrorBoundary = () => <ErrorBoundaryComponent />;

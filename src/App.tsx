@@ -1,15 +1,7 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
+import { ErrorBoundaryComponent } from "./components/ErrorBoundaryComponent";
 import { Header } from "./components/Header";
-import {
-  EditTodo,
-  loader as editTodoLoader,
-  action as editTodoAction,
-} from "./routes/EditTodo";
-import { NewTodo, action as newTodoAction } from "./routes/NewTodo";
-import { Todos, loader as todosLoader } from "./routes/Todos";
-import { Home } from "./routes/Home";
-import { ErrorBoundary } from "./components/ErrorBoundary";
 
 const RootLayout = () => {
   return (
@@ -23,22 +15,19 @@ const RootLayout = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    errorElement: <ErrorBoundary />,
+    errorElement: <ErrorBoundaryComponent />,
     element: <RootLayout />,
     children: [
-      { path: "home", element: <Home /> },
+      { path: "home", lazy: () => import("./routes/Home") },
       {
         path: "todos",
         children: [
-          { path: "new", element: <NewTodo />, action: newTodoAction },
+          { path: "new", lazy: () => import("./routes/NewTodo") },
           {
             path: ":todoId",
-            element: <EditTodo />,
-            loader: editTodoLoader,
-            action: editTodoAction,
-            errorElement: <ErrorBoundary />,
+            lazy: () => import("./routes/EditTodo"),
           },
-          { index: true, element: <Todos />, loader: todosLoader },
+          { index: true, lazy: () => import("./routes/Todos") },
         ],
       },
     ],
