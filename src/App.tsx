@@ -1,9 +1,9 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header";
-import { EditTodo } from "./routes/EditTodo";
+import { EditTodo, loader as editTodoLoader } from "./routes/EditTodo";
 import { NewTodo } from "./routes/NewTodo";
-import { Todos } from "./routes/Todos";
+import { Todos, loader as todosLoader } from "./routes/Todos";
 import { Home } from "./routes/Home";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
@@ -27,8 +27,13 @@ const router = createBrowserRouter([
         path: "todos",
         children: [
           { path: "new", element: <NewTodo /> },
-          { path: ":todoId", element: <EditTodo /> },
-          { index: true, element: <Todos /> },
+          {
+            path: ":todoId",
+            element: <EditTodo />,
+            loader: editTodoLoader,
+            errorElement: <ErrorBoundary />,
+          },
+          { index: true, element: <Todos />, loader: todosLoader },
         ],
       },
     ],
