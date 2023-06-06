@@ -1,13 +1,17 @@
 import { NavLink } from "react-router-dom";
 
-export const Header = () => {
+type HeaderProps = {
+  numberOfTodos: number;
+};
+
+export const Header = ({ numberOfTodos }: HeaderProps) => {
   return (
     <header>
       <nav>
         <ul className="flex gap-4">
           {[
             { to: "home", title: "Home" },
-            { to: "todos", title: "Todos" },
+            { to: "todos", title: `Todos (${numberOfTodos})` },
           ].map(({ to, title }) => (
             <li key={to}>
               <NavLink
